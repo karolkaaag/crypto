@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+         prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171"
+         xmlns:fx="http://javafx.com/fxml/1">
+    <tabs>
+        <Tab text="Caesar">
+            <fx:include source="caesar.fxml"/>
+        </Tab>
+        <Tab text="Rail fence">
+            <fx:include source="railFence.fxml"/>
+        </Tab>
+        <Tab text="Vigenere">
+            <fx:include source="vigenere.fxml"/>
+        </Tab>
+        <Tab text="Matrix">
+            <fx:include source="matrix.fxml"/>
+        </Tab>
+        <Tab text="LFSR">
+            <fx:include source="lfsr.fxml"/>
+        </Tab>
+        <Tab text="SSC">
+            <fx:include source="ssc.fxml"/>
+        </Tab>
+        <Tab text="DES">
+            <fx:include source="des.fxml"/>
+        </Tab>
+    </tabs>
+</TabPane>

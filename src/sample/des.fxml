@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<SplitPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+           prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="sample.DesController">
+    <items>
+        <AnchorPane fx:id="input" prefHeight="428.0" prefWidth="299.0" style="-fx-background-color: lightblue;">
+            <children>
+                <Text layoutX="264.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DES"
+                      AnchorPane.bottomAnchor="363.0" AnchorPane.leftAnchor="264.0"
+                      AnchorPane.rightAnchor="263.70947265625" AnchorPane.topAnchor="14.0"/>
+                <TextField fx:id="keyDES" layoutX="112.0" layoutY="169.0" promptText="key - 16 length hexadecimal"/>
+                <Button fx:id="buttonEncDES" layoutX="404.0" layoutY="94.0" mnemonicParsing="false"
+                        onAction="#buttonEncSSC" text="encryption"/>
+                <TextArea fx:id="finalTextDES" layoutX="102.0" layoutY="281.0" prefHeight="70.0" prefWidth="375.0"/>
+                <TextField fx:id="textDES" layoutX="112.0" layoutY="94.0" promptText="text - 16 length hexadecimal"/>
+                <Button fx:id="buttonDecDES" layoutX="404.0" layoutY="169.0" mnemonicParsing="false"
+                        onAction="#buttonDecSSC" text="decryption"/>
+            </children>
+        </AnchorPane>
+    </items>
+</SplitPane>
