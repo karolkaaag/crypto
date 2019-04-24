@@ -36,6 +36,7 @@ public class LFSRController implements Initializable {
         List<Integer> wielomian = new LinkedList<>();
         String pathResult = new String();
         List<String> listResult = new LinkedList<>();
+        String output="";
         int first = 0;
 
         for (int i = 0; i < seed.length(); i++) {
@@ -53,7 +54,7 @@ public class LFSRController implements Initializable {
                 first ^= Integer.parseInt(tabZ[value]);
 
             pathResult = first + pathResult;
-
+            output+=pathResult.charAt(polynomial.length()-1);
             listResult.add(pathResult);
 
             for (int k = 0; k < seed.length(); k++)
@@ -69,9 +70,10 @@ public class LFSRController implements Initializable {
             System.out.println(res.get(i).toString());
         }
 
-        textAfterLSFR.setText(res.get(res.size()-1));
-        System.out.println("encrypted: " + res.get(res.size()-1));
-
+        System.out.println("encrypted: "+output);
+        // textAfterLSFR.setText(res.get(res.size()-1));
+        textAfterLSFR.setText(output);
+        //System.out.println("encrypted: " + res.get(res.size()-1));
         /*char[] tab = new char[n];
         for (int i=0; i<n; i++){
             tab[i] = ((res.get(i)).toString()).charAt(res.size());
