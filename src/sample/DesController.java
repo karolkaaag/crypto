@@ -217,7 +217,7 @@ public class DesController implements Initializable {
         // newBits from initial permutation ad.2
         int newBits[] = new int[inputBits.length];
         for(int i=0 ; i < inputBits.length ; i++) {
-            newBits[i] = inputBits[IP[i]-1];
+            newBits[i] = inputBits[IP[i]-1]; //2pkt początkowa permutacja
         }
         System.out.println("newBits after IP:");
         for (int i = 0; i < newBits.length; i++) {
@@ -227,13 +227,13 @@ public class DesController implements Initializable {
         // 16 rounds will start here
         // L and R arrays are created to store the Left and Right halves of the
         // subkey respectively
-        int L[] = new int[32];
+        int L[] = new int[32];//1,3 pkt podział na 2 część
         int R[] = new int[32];
         int i;
 
         // Permuted Choice 1 na kluczu
         for(i=0 ; i < 28 ; i++) {
-            C[i] = keyBits[PC1[i]-1];
+            C[i] = keyBits[PC1[i]-1];//4pkt permutacja PC klucza
         }
         for( ; i < 56 ; i++) {
             D[i-28] = keyBits[PC1[i]-1];
@@ -263,16 +263,16 @@ public class DesController implements Initializable {
                 System.out.print("Round key = ");
                 displayBits(subkey[15-n]);
             } else {
-                newR = feistel(R, KS(n, keyBits));
+                newR = feistel(R, KS(n, keyBits));//przejście do funkcji feistel
                 System.out.print("Round key = ");
                 displayBits(subkey[n]);
             }
             // xor-ing the L and new R gives the new L value. new L is stored
             // in R and new R is stored in L, thus exchanging R and L for the
             // next round.
-            int newL[] = xor(L, newR);
+            int newL[] = xor(L, newR);//15 XOR blok L i R po przekształceniach
             L = R;
-            R = newL;
+            R = newL;// 16 kopiujemy bloki do L przepisumeny stare R a do R nowe R
             System.out.print("L = ");
             displayBits(L);
             System.out.print("R = ");
@@ -282,14 +282,14 @@ public class DesController implements Initializable {
         // R and L has the two halves of the output before applying the final
         // permutation. This is called the "Preoutput".
         int output[] = new int[64];
-        System.arraycopy(R, 0, output, 0, 32);
+        System.arraycopy(R, 0, output, 0, 32);//17 łączymy w blok 64 bitowy w odwóconej kolejności
         System.arraycopy(L, 0, output, 32, 32);
         int finalOutput[] = new int[64];
         // Applying FP table to the preoutput, we get the final output:
         // Encryption => final output is ciphertext
         // Decryption => final output is plaintext
         for(i=0 ; i < 64 ; i++) {
-            finalOutput[i] = output[FP[i]-1];
+            finalOutput[i] = output[FP[i]-1];//18 blok 64 poddajemy odwrócenej Inital permutation
         }
 
         /*// Since the final output is stored as an int array of bits, we convert
@@ -376,15 +376,15 @@ public class DesController implements Initializable {
     private static int[] feistel(int[] R, int[] roundKey) {
         // Method to implement Fiestel function.
         // First the 32 bits of the R array are expanded using E table.
-        int expandedR[] = new int[48];
+        int expandedR[] = new int[48];//8 pkt przekształcdnie 32bitów w blok 48 za pomocą permutacji E
         for(int i=0 ; i < 48 ; i++) {
             expandedR[i] = R[E[i]-1];
         }
         // We xor the expanded R and the generated round key
-        int temp[] = xor(expandedR, roundKey);
+        int temp[] = xor(expandedR, roundKey);//9pkt XOR na 48 bitowym kluczu
         // The S boxes are then applied to this xor result and this is the
         // output of the Fiestel function.
-        int output[] = sBlock(temp);
+        int output[] = sBlock(temp); //wywołanie funcko Sblock pkt od 10
         return output;
     }
 
@@ -408,14 +408,14 @@ public class DesController implements Initializable {
             // input bits. The first and 6th bit of the current iteration
             // (i.e. bits 0 and 5) gives the row bits.
             int row[] = new int [2];
-            row[0] = bits[6*i];
+            row[0] = bits[6*i]; //11 idesksy wierszy
             row[1] = bits[(6*i)+5];
             String sRow = row[0] + "" + row[1];
             // Similarly column bits are found, which are the 4 bits between
             // the two row bits (i.e. bits 1,2,3,4)
             int column[] = new int[4];
-            column[0] = bits[(6*i)+1];
-            column[1] = bits[(6*i)+2];
+            column[0] = bits[(6*i)+1];//10 pkt podział na ciągi 6 bitowe
+            column[1] = bits[(6*i)+2];//11 indeksy kolumn
             column[2] = bits[(6*i)+3];
             column[3] = bits[(6*i)+4];
             String sColumn = column[0] +""+ column[1] +""+ column[2] +""+ column[3];
@@ -423,17 +423,17 @@ public class DesController implements Initializable {
             // array as input
             int iRow = Integer.parseInt(sRow, 2);
             int iColumn = Integer.parseInt(sColumn, 2);
-            int x = S[i][(iRow*16) + iColumn];
+            int x = S[i][(iRow*16) + iColumn];//12 przekształcenie przez odpowiadające tablice S
             // We get decimal value of the S-box here, but we need to convert
             // it into binary:
             String s = Integer.toBinaryString(x);
             // Padding is required since Java returns a decimal '5' as '111' in
             // binary, when we require '0111'.
             while(s.length() < 4) {
-                s = "0" + s;
+                s = "0" + s; //po 12 uzyskujemy ciągi 4 elementowe
             }
             // The binary bits are appended to the output
-            for(int j=0 ; j < 4 ; j++) {
+            for(int j=0 ; j < 4 ; j++) { //13 łączymy ciągi uzyskując 32 bity
                 output[(i*4) + j] = Integer.parseInt(s.charAt(j) + "");
             }
         }
@@ -441,7 +441,7 @@ public class DesController implements Initializable {
         // S-box round:
         int finalOutput[] = new int[32];
         for(int i=0 ; i < 32 ; i++) {
-            finalOutput[i] = output[P[i]-1];
+            finalOutput[i] = output[P[i]-1];//14 pkt modyfikacja za pomocą permutacji P
         }
         return finalOutput;
     }
