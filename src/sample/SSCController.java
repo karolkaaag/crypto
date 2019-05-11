@@ -28,7 +28,7 @@ public class SSCController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-
+//przykłądowy komentarz
     public void buttonEncSSC(ActionEvent actionEvent) throws IOException {
 
         String seed = textSeed.getText();
